@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Name | Sierra Kaze</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+JP:wght@100;300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --paper: #f7f5f0;
+      --mist: #e8e4dc;
+      --sierra-blue: #4a6fa5;
+      --sierra-gold: #c4a35a;
+      --fog: rgba(247, 245, 240, 0.85);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Subtle paper texture */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--sierra-blue);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float 15s infinite linear;
+    }
+
+    .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 25%; top: 60%; animation-delay: 2s; }
+    .particle:nth-child(3) { left: 45%; top: 35%; animation-delay: 4s; }
+    .particle:nth-child(4) { left: 65%; top: 75%; animation-delay: 6s; }
+    .particle:nth-child(5) { left: 80%; top: 25%; animation-delay: 8s; }
+    .particle:nth-child(6) { left: 90%; top: 55%; animation-delay: 10s; }
+
+    @keyframes float {
+      0% {
+        opacity: 0;
+        transform: translateX(0) translateY(0);
+      }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.4; }
+      100% {
+        opacity: 0;
+        transform: translateX(100px) translateY(-50px);
+      }
+    }
+
+    /* Main container */
+    .container {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 3rem 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4rem;
+      opacity: 0;
+      animation: fadeSlideDown 1s ease-out 0.3s forwards;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .logo a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-main {
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .logo-japanese {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: var(--sierra-blue);
+      opacity: 0.8;
+    }
+
+    .back-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sierra-blue);
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+    }
+
+    /* Content */
+    .content {
+      flex: 1;
+      opacity: 0;
+      animation: fadeSlideUp 1s ease-out 0.6s forwards;
+    }
+
+    .page-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+
+    .pronunciation {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: var(--sierra-blue);
+      margin-bottom: 3rem;
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--sierra-gold), transparent);
+      margin: 2.5rem 0;
+    }
+
+    .section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sierra-blue);
+      margin-bottom: 1rem;
+    }
+
+    .definition {
+      margin-bottom: 1.5rem;
+    }
+
+    .term {
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .term-jp {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 100;
+      color: var(--sierra-blue);
+      margin-left: 0.5rem;
+    }
+
+    .meaning {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--ink);
+      opacity: 0.8;
+    }
+
+    .highlight {
+      font-style: italic;
+      color: var(--sierra-blue);
+    }
+
+    .quote {
+      font-size: 1.3rem;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--ink);
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--sierra-gold);
+      margin: 1.5rem 0;
+    }
+
+    .japanese-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .jp-item {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .jp-char {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 2rem;
+      font-weight: 100;
+      color: var(--sierra-blue);
+      min-width: 120px;
+    }
+
+    .jp-desc {
+      font-size: 0.9rem;
+      color: var(--ink);
+      opacity: 0.7;
+    }
+
+    .closing {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--ink);
+      opacity: 0.85;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--mist);
+      opacity: 0;
+      animation: fadeSlideUp 1s ease-out 0.9s forwards;
+    }
+
+    .footer-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--ink);
+      opacity: 0.4;
+    }
+
+    /* Animations */
+    @keyframes fadeSlideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 2rem 1.5rem;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 3rem;
+      }
+
+      .jp-item {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .jp-char {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="logo">
+        <a href="/">
+          <span class="logo-main">Sierra Kaze</span>
+          <span class="logo-japanese">シエラ・カゼ</span>
+        </a>
+      </div>
+      <a href="/" class="back-link">&larr; Back</a>
+    </header>
+
+    <main class="content">
+      <h1 class="page-title">Sierra Kaze</h1>
+      <p class="pronunciation">see-EH-rah KAH-zeh</p>
+
+      <div class="divider"></div>
+
+      <section class="section">
+        <h2 class="section-title">The Name</h2>
+
+        <div class="definition">
+          <p class="term">Sierra</p>
+          <p class="meaning">The Sierra Nevada mountain range in California. Represents strength, permanence, and the natural beauty of the West Coast.</p>
+        </div>
+
+        <div class="definition">
+          <p class="term">Kaze <span class="term-jp">風</span></p>
+          <p class="meaning">Japanese for "wind." Represents movement, change, and the invisible force that shapes landscapes over time.</p>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="section">
+        <h2 class="section-title">The Meaning</h2>
+        <p class="quote">Sierra Kaze is "Wind of the Sierra" &mdash; the mountain breeze that flows through California's peaks and valleys.</p>
+        <p class="meaning">It captures the spirit of building things that last (like mountains) while staying adaptive and forward-moving (like wind). A blend of California roots and Japanese philosophy.</p>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="section">
+        <h2 class="section-title">Written in Japanese</h2>
+        <div class="japanese-section">
+          <div class="jp-item">
+            <span class="jp-char">シエラ・カゼ</span>
+            <span class="jp-desc">Phonetic spelling (katakana)</span>
+          </div>
+          <div class="jp-item">
+            <span class="jp-char">風</span>
+            <span class="jp-desc">The kanji character for wind</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="section">
+        <h2 class="section-title">Why It Fits</h2>
+        <p class="closing">A holding company for technology ventures and investments &mdash; grounded in Silicon Valley, always evolving, shaping the future one venture at a time.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p class="footer-text">Sierra Kaze &middot; San Jose, California</p>
+    </footer>
+  </div>
+</body>
+</html>
