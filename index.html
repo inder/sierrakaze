@@ -158,6 +158,18 @@
 
     .logo {
       display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .logo-text {
+      display: flex;
       flex-direction: column;
       gap: 0.25rem;
     }
@@ -460,8 +472,11 @@
   <div class="container">
     <header>
       <div class="logo">
-        <span class="logo-main">Sierra Kaze</span>
-        <span class="logo-japanese">シエラ・カゼ</span>
+        <img src="assets/logo-mountain-wind.svg" alt="Sierra Kaze" class="logo-icon">
+        <div class="logo-text">
+          <span class="logo-main">Sierra Kaze</span>
+          <span class="logo-japanese">シエラ・カゼ</span>
+        </div>
       </div>
       <span class="tagline">Building the future,<br>one venture at a time</span>
     </header>
